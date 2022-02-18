@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 from browser_alone import WebDriverFactory
+import re
 from page_methods import wait_for_open
 from wait_element import *
 from file_work import list_books
@@ -54,10 +55,11 @@ def main(how_much=3):
         browser.find_element(*Locators.save_button).click()
         wait_download_button(*Locators.download_button)
         browser.find_element(*Locators.download_button).click()
-        while not find_the_file():
-            continue
-        path_to_mp3 = find_the_file()
-        replace_file(path_to_mp3, rename("test"), '1')
+        while True:
+            find_the_file()
+            if re.search("audio-joiner", find_the_file()) and not re.search(".download", find_the_file()):
+                break
+        replace_file(find_the_file(), rename("test"), '1.mp3')
     browser.quit()
     print("File already downloaded")
 
