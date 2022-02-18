@@ -3,6 +3,10 @@
 
 # IntelliJ project files
 .idea
+.pytest_cache
+venv
+__pycache__
 *.iml
+*.txt
 out
 gen
